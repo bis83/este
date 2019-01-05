@@ -18,6 +18,10 @@ class Scene {
         this.isGameStart = false;
         this.isGameOver = false;
         this.head = [];
+        this.head.push({id: 0, x: 450, y: 550, water: 0, time: 0});
+        this.head.push({id: 1, x: 550, y: 150, water: 0, time: 0});
+        this.head.push({id: 2, x: 150, y: 50, water: 0, time: 0});
+        this.head.push({id: 3, x: 50, y: 450, water: 0, time: 0});
     }
 
     update(input) {
@@ -26,6 +30,7 @@ class Scene {
     draw(fx) {
         this.drawBackground(fx);
         this.drawBoard(fx);
+        this.drawFountainHeads(fx);
         if(!this.isGameStart) {
             this.drawPreStart(fx);
         }
@@ -51,6 +56,15 @@ class Scene {
     }
 
     drawFountainHeads(fx) {
+        fx.sprite.texture("img/fountainhead.png");
+        fx.sprite.color(1, 1, 1, 1);
+        for(const item of this.head) {
+            const u = item.id * 0.25;
+            const v = (item.water > 0) ? 0 : 0.5;
+            fx.sprite.uv(u, v, u + 0.25, v + 0.5);
+            fx.sprite.trans(item.x, item.y, 100, 100, 0);
+            fx.sprite.draw();
+        }
     }
 
     drawFountains(fx) {
